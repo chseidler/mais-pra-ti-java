@@ -1,6 +1,6 @@
-#CRUD (Create, Read, Update and Delete)
+# CRUD (Create, Read, Update and Delete)
 - ------------------------
-##Pessoas/Alunos
+## Pessoas/Alunos
 
 - Criar Pessoa ou Aluno;
 - Mostrar todas as Pessoas e Alunos criados (listar na tela);
@@ -8,7 +8,7 @@
 - Deletar uma Pessoa ou Aluno;
 - Encerrar programa.
 - ------------------------
-##Aluno/Pessoa:
+## Aluno/Pessoa:
 - Nome;
 - Telefone;
 - Data de Nascimento;
@@ -16,7 +16,7 @@
 - Data da ultima alteração;
 - Nota final do curso.
 - ------------------------
-##Requisitos
+## Requisitos
 - Caso informe nota final do curso = Aluno, do contrario Pessoa;
 - Menu iterativo com as opçoes (looping);
 - ArrayList;
