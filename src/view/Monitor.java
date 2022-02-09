@@ -1,6 +1,6 @@
 package view;
 
-import static view.Opcoes.*;
+import static controller.Opcoes.*;
 
 import java.util.Scanner;
 
