@@ -18,22 +18,11 @@ public class Opcoes {
      * Gerencia as validacoes e armazena dados no ArrayList.
      */
     public static void menuInserir() {
-        boolean validaN = false, validaT = false, validaA = false, validaNota = false;
-        while (!validaN) {
-            System.out.print("Digite o nome que deseja cadastrar: ");
-            nome = sc.nextLine();
-            validaN = Validador.validaNome(nome);
-        }
-        while (!validaT) {
-            System.out.print("Digite o telefone que deseja cadastrar: ");
-            telefone = sc.nextLine();
-            validaT = Validador.validaTelefone(telefone);
-        }
-        while (!validaA) {
-            System.out.print("Digite a data de nascimento que deseja cadastrar: ");
-            aniversario = sc.nextLine();
-            validaA = Validador.validaData(aniversario);
-        }
+        boolean validaNota = false;
+        nome = retornaVariavelValidada("Digite o nome que deseja cadastrar: ","nome");
+        telefone = retornaVariavelValidada("Digite o telefone que deseja cadastrar: ","telefone");
+        aniversario = retornaVariavelValidada("Digite a data de nascimento que deseja cadastrar: ","aniversario");
+
         boolean aguardaConfirmacao = true;
         do {
             System.out.println("Deseja cadastrar uma nota? \n[1] - SIM\n[2] - NÃO");
@@ -194,5 +183,23 @@ public class Opcoes {
         if (!p.getDataCadastrada().equals(p.getDataAlterada()))
             System.out.println("Alterado em: " + p.getDataAlterada());
         System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+    }
+    private static String retornaVariavelValidada(String texto, String tipo) {
+        String retorno = null;
+        while (retorno == null) {
+            System.out.print(texto);
+            String entrada = sc.nextLine();
+            switch (tipo) {
+                case "nome": if (Validador.validaNome(entrada)) { retorno = entrada; }
+                    break;
+                case "telefone": if (Validador.validaTelefone(entrada)) { retorno = entrada; }
+                    break;
+                case "aniversario": if (Validador.validaData(entrada)) { retorno = entrada; }
+                    break;
+                case "nota": if (Validador.validaNota(entrada)) {  retorno = entrada; }
+                    break;
+            }
+        }
+        return retorno;
     }
 }
