@@ -18,35 +18,17 @@ public class Opcoes {
      * Gerencia as validacoes e armazena dados no ArrayList.
      */
     public static void menuInserir() {
-        boolean validaNota = false;
-        nome = retornaVariavelValidada("Digite o nome que deseja cadastrar: ","nome");
-        telefone = retornaVariavelValidada("Digite o telefone que deseja cadastrar: ","telefone");
-        aniversario = retornaVariavelValidada("Digite a data de nascimento que deseja cadastrar: ","aniversario");
+        nome = retornaVariavelValidada("Digite o nome que deseja cadastrar: ", "nome");
+        telefone = retornaVariavelValidada("Digite o telefone que deseja cadastrar: ", "telefone");
+        aniversario = retornaVariavelValidada("Digite a data de nascimento que deseja cadastrar: ", "aniversario");
 
-        boolean aguardaConfirmacao = true;
-        do {
-            System.out.println("Deseja cadastrar uma nota? \n[1] - SIM\n[2] - NÃO");
-        confirmacao = sc.nextLine();
-        switch (confirmacao) {
-            case "1" -> {
-                while (!validaNota) {
-                    System.out.print("Digite a nota do aluno: ");
-                    notaFinal = sc.nextLine();
-                    validaNota = Validador.validaNota(notaFinal);
-                }
-                double notaFinald = Double.parseDouble(notaFinal);
-                cadastros.inserir(new Aluno(nome, telefone, aniversario, notaFinald));
-                System.out.println("Aluno " + nome + " cadastrado(a) com sucesso!");
-                aguardaConfirmacao = false;
-            }
-            case "2" -> {
-                cadastros.inserir(new Pessoa(nome, telefone, aniversario));
-                System.out.println("Pessoa " + nome + " cadastrado(a) com sucesso!");
-                aguardaConfirmacao = false;
-            }
-            default -> System.out.println("Favor digite 1 para SIM ou 2 para NAO.");
+        if (desejaInserirNota()) {
+            notaFinal = retornaVariavelValidada("Digite a nota do aluno: ", "nota");
+            notaFinald = Double.parseDouble(notaFinal);
+            inserirAluno();
+        } else {
+            inserirPessoa();
         }
-        } while (aguardaConfirmacao);
     }
 
     /**
@@ -58,9 +40,10 @@ public class Opcoes {
         if (cadastros.todos().isEmpty()) {
             System.out.println("Nenhum registro encontrado.");
             return false;
-        } else
+        } else {
             cadastros.todos().forEach(Opcoes::informacoes);
             return true;
+        }
     }
 
     /**
@@ -184,6 +167,7 @@ public class Opcoes {
             System.out.println("Alterado em: " + p.getDataAlterada());
         System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
     }
+
     private static String retornaVariavelValidada(String texto, String tipo) {
         String retorno = null;
         while (retorno == null) {
@@ -201,5 +185,27 @@ public class Opcoes {
             }
         }
         return retorno;
+    }
+
+    private static void inserirAluno() {
+        cadastros.inserir(new Aluno(nome, telefone, aniversario, notaFinald));
+        System.out.println("Aluno " + nome + " cadastrado(a) com sucesso!");
+    }
+
+    private static void inserirPessoa() {
+        cadastros.inserir(new Pessoa(nome, telefone, aniversario));
+        System.out.println("Pessoa " + nome + " cadastrado(a) com sucesso!");
+    }
+
+    private static boolean desejaInserirNota() {
+        do {
+            System.out.println("Deseja cadastrar uma nota? \n[1] - SIM\n[2] - NÃO");
+            confirmacao = sc.nextLine();
+            switch (confirmacao) {
+                case "1": return true;
+                case "2": return false;
+                default: System.out.println("Favor digite 1 para SIM ou 2 para NAO.");
+            }
+        } while (true);
     }
 }
