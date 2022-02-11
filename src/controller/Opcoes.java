@@ -125,7 +125,7 @@ public class Opcoes {
                     cadastros.atualizar(idAtualizar, atualizado);
                     System.out.println("|ID = " + idAtualizar + "| atualizado com sucesso!");
                 } else
-                    System.out.println("Nao foi possivel excluir, ID nao encontrado.");
+                    System.out.println("Nao foi possivel atualizar, ID nao encontrado.");
             }
         }
     }
@@ -136,21 +136,19 @@ public class Opcoes {
      * Gerencia a validacao conforme ID passado pelo usuario e exclui dado no ArrayList.
      */
     public static void menuDeletar() {
-        boolean validaInt;
-        String deletar;
         if (menuVisualizar()) {
-            System.out.print("Digite o ID do cadastro que deseja deletar: ");
-            deletar = sc.nextLine();
-            validaInt = Validador.validaID(deletar);
-            if (validaInt) {
-                int idDeletar = Integer.parseInt(deletar);
-                if (idDeletar >= 0 && idDeletar < cadastros.todos().size()) {
-                    cadastros.deletar(idDeletar);
-                    System.out.println("ID " + idDeletar + " excluido com sucesso!");
-                } else
-                    System.out.println("Nao foi possivel excluir, ID nao encontrado.");
-            }
+            String deletar = retornaVariavelValidada("Digite o ID do cadastro que deseja deletar: ", "id");
+            int idDeletar = Integer.parseInt(deletar);
+            deletarID(idDeletar);
         }
+    }
+
+    private static void deletarID(int idDeletar) {
+        if (idDeletar >= 0 && idDeletar < cadastros.todos().size()) {
+            cadastros.deletar(idDeletar);
+            System.out.println("ID " + idDeletar + " excluido com sucesso!");
+        } else
+            System.out.println("Nao foi possivel excluir, ID nao encontrado.");
     }
 
     /**
@@ -181,6 +179,8 @@ public class Opcoes {
                 case "aniversario": if (Validador.validaData(entrada)) { retorno = entrada; }
                     break;
                 case "nota": if (Validador.validaNota(entrada)) {  retorno = entrada; }
+                    break;
+                case "id": if (Validador.validaID(entrada)) {  retorno = entrada; }
                     break;
             }
         }
