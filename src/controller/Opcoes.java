@@ -22,12 +22,12 @@ public class Opcoes {
         telefone = retornaVariavelValidada("Digite o telefone que deseja cadastrar: ", "telefone");
         aniversario = retornaVariavelValidada("Digite a data de nascimento que deseja cadastrar: ", "aniversario");
 
-        if (desejaInserirNota()) {
+        if (desejaInserir("Deseja cadastrar uma nota?")) {
             notaFinal = retornaVariavelValidada("Digite a nota do aluno: ", "nota");
             notaFinald = Double.parseDouble(notaFinal);
-            inserirAluno();
+            inserirAluno(nome, telefone, aniversario, notaFinald);
         } else {
-            inserirPessoa();
+            inserirPessoa(nome, telefone, aniversario);
         }
     }
 
@@ -51,82 +51,58 @@ public class Opcoes {
      * Gerencia as validacoes e armazena, ou mantem, os dados no ArrayList.
      */
     public static void menuAtualizar() {
-        boolean validaInt;
-        String id;
         notaFinald = -11;
         if (menuVisualizar()) {
-            System.out.print("Digite o ID do cadastro que deseja atualizar: ");
-            id = sc.nextLine();
-            validaInt = Validador.validaID(id);
-            if (validaInt) {
-                int idAtualizar = Integer.parseInt(id);
-                if (idAtualizar >= 0 && idAtualizar < cadastros.todos().size()) {
-                    boolean validaN = false, validaT = false, validaA = false, validaNota = false;
-                    final Pessoa p = cadastros.exibir(idAtualizar);
-                    while (!validaN) {
-                        System.out.println("Nome atual do cadastro: " + p.getNome());
-                        System.out.print("Digite o novo nome (Pressione ENTER sem digitar nada para manter o atual): ");
-                        nome = sc.nextLine();
-                        validaN = nome.equals("") || Validador.validaNome(nome);
-                    }
-                    while (!validaT) {
-                        System.out.println("Telefone atual do cadastro: " + p.getTelefone());
-                        System.out.print("Digite o novo telefone (Pressione ENTER sem digitar nada para manter o atual): ");
-                        telefone = sc.nextLine();
-                        validaT = telefone.equals("") || Validador.validaTelefone(telefone);
-                    }
-                    while (!validaA) {
-                        System.out.println("Data de nascimento atual do cadastro: " + p.getDataNascimento());
-                        System.out.print("Digite a nova data de nascimento (Pressione ENTER sem digitar nada para manter o atual): ");
-                        aniversario = sc.nextLine();
-                        validaA = aniversario.equals("") || Validador.validaData(aniversario);
-                    }
-                    boolean aguardaConfirmacao = true;
-                    boolean removerNota = false;
-                    boolean temNota = false;
-                    do {
-                        System.out.println("Deseja atualizar ou inserir uma nota? \n[1] - SIM\n[2] - NAO");
-                        System.out.println("[3] - Remover nota (Aluno vira Pessoa)");
-                        confirmacao = sc.nextLine();
-                        switch (confirmacao) {
-                            case "1" -> {
-                                while (!validaNota) {
-                                    System.out.print("Digite a nota do aluno: ");
-                                    notaFinal = sc.nextLine();
-                                    validaNota = Validador.validaNota(notaFinal);
-                                }
-                                notaFinald = Double.parseDouble(notaFinal);
-                                temNota = true;
-                                aguardaConfirmacao = false;
-                            }
-                            case "2" -> aguardaConfirmacao = false;
-                            case "3" ->  {
-                                removerNota = true;
-                                aguardaConfirmacao = false;
-                            }
-                            default -> System.out.println("Favor digite 1 para SIM, 2 para NAO ou 3 para REMOVER NOTA.");
-                        }
-                    } while (aguardaConfirmacao);
+            String id = retornaVariavelValidada("Digite o ID do cadastro que deseja atualizar: ", "id");
+            int idAtualizar = Integer.parseInt(id);
+            if (idExiste(idAtualizar)) {
+                final Pessoa p = cadastros.exibir(idAtualizar);
 
-                    String insNome = nome.equals("") ? p.getNome() : nome;
-                    String insTelefone = telefone.equals("") ? p.getTelefone() : telefone;
-                    String insAniversario = aniversario.equals("") ? p.getDataNascimento() : aniversario;
-                    double insNotaFinal;
-                    Pessoa atualizado;
+                System.out.println("Nome atual do cadastro: " + p.getNome());
+                if (desejaInserir("Deseja atualizar o nome?")) {
+                    nome = retornaVariavelValidada("Digite o novo nome: ", "nome");
+                } else {
+                    nome = p.getNome();
+                }
 
-                    if ((p instanceof Aluno && !removerNota) || temNota) {
-                        insNotaFinal = notaFinald == -11 ? ((Aluno) p).getNotaFinal() : notaFinald;
-                        atualizado = new Aluno(insNome, insTelefone, insAniversario, insNotaFinal);
-                    } else {
-                        atualizado = new Pessoa(insNome, insTelefone, insAniversario);
-                    }
-                    atualizado.setDataCadastrada(p.getDataCadastrada());
+                System.out.println("Telefone atual do cadastro: " + p.getTelefone());
+                if (desejaInserir("Deseja atualizar o telefone?")) {
+                    telefone = retornaVariavelValidada("Digite o novo telefone: ", "telefone");
+                } else {
+                    telefone = p.getTelefone();
+                }
 
-                    cadastros.atualizar(idAtualizar, atualizado);
-                    System.out.println("|ID = " + idAtualizar + "| atualizado com sucesso!");
-                } else
-                    System.out.println("Nao foi possivel atualizar, ID nao encontrado.");
-            }
+                System.out.println("Data de nascimento atual do cadastro: " + p.getDataNascimento());
+                if (desejaInserir("Deseja atualizar a data de nascimento?")) {
+                    aniversario = retornaVariavelValidada("Digite a nova data de nascimento: ", "aniversario");
+                } else {
+                    aniversario = p.getDataNascimento();
+                }
+
+                if ((p.getTipo().equals("Aluno"))) {
+                    System.out.println("Nota atual do cadastro: " + ((Aluno) p).getNotaFinal());
+                } else {
+                    System.out.println("Nenhuma nota registrada.");
+                }
+                if (desejaInserir("Deseja atualizar a nota?")) {
+                    notaFinal = retornaVariavelValidada("Digite a nova nota: ", "nota");
+                    notaFinald = Double.parseDouble(notaFinal);
+                } else {
+                    notaFinald = p instanceof Aluno ? ((Aluno) p).getNotaFinal() : -11;
+                }
+                Pessoa atualizado;
+
+                if (notaFinald != -11) {
+                    atualizado = new Aluno(nome, telefone, aniversario, notaFinald);
+                } else {
+                    atualizado = new Pessoa(nome, telefone, aniversario);
+                }
+                atualizado.setDataCadastrada(p.getDataCadastrada());
+
+                cadastros.atualizar(idAtualizar, atualizado);
+                System.out.println("|ID = " + idAtualizar + "| atualizado com sucesso!");
+            } else
+                System.out.println("Nao foi possivel atualizar, ID nao encontrado.");
         }
     }
 
@@ -144,11 +120,15 @@ public class Opcoes {
     }
 
     private static void deletarID(int idDeletar) {
-        if (idDeletar >= 0 && idDeletar < cadastros.todos().size()) {
+        if (idExiste(idDeletar)) {
             cadastros.deletar(idDeletar);
             System.out.println("ID " + idDeletar + " excluido com sucesso!");
         } else
             System.out.println("Nao foi possivel excluir, ID nao encontrado.");
+    }
+
+    private static boolean idExiste(int id) {
+        return id >= 0 && id < cadastros.todos().size();
     }
 
     /**
@@ -187,19 +167,20 @@ public class Opcoes {
         return retorno;
     }
 
-    private static void inserirAluno() {
-        cadastros.inserir(new Aluno(nome, telefone, aniversario, notaFinald));
-        System.out.println("Aluno " + nome + " cadastrado(a) com sucesso!");
+    private static void inserirAluno(String nomeInserir, String telefoneInserir, String aniversarioInserir, double notaFinaldInserir) {
+        cadastros.inserir(new Aluno(nomeInserir, telefoneInserir, aniversarioInserir, notaFinaldInserir));
+        System.out.println("Aluno " + nomeInserir + " cadastrado(a) com sucesso!");
     }
 
-    private static void inserirPessoa() {
-        cadastros.inserir(new Pessoa(nome, telefone, aniversario));
-        System.out.println("Pessoa " + nome + " cadastrado(a) com sucesso!");
+    private static void inserirPessoa(String nomeInserir, String telefoneInserir, String aniversarioInserir) {
+        cadastros.inserir(new Pessoa(nomeInserir, telefoneInserir, aniversarioInserir));
+        System.out.println("Pessoa " + nomeInserir + " cadastrado(a) com sucesso!");
     }
 
-    private static boolean desejaInserirNota() {
+    private static boolean desejaInserir(String texto) {
         do {
-            System.out.println("Deseja cadastrar uma nota? \n[1] - SIM\n[2] - NÃO");
+            System.out.println(texto);
+            System.out.println("[1] - SIM\n[2] - NÃO");
             confirmacao = sc.nextLine();
             switch (confirmacao) {
                 case "1": return true;
