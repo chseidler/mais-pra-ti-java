@@ -189,4 +189,10 @@ public class Opcoes {
             }
         } while (true);
     }
+
+    public static boolean menuSair() {
+        System.out.println("Programa encerrado!");
+        sc.close();
+        return false;
+    }
 }

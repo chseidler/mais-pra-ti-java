@@ -41,11 +41,7 @@ public class Monitor {
                 case MOSTRAR_TODOS -> menuVisualizar();
                 case ATUALIZAR -> menuAtualizar();
                 case DELETAR -> menuDeletar();
-                case SAIR -> {
-                    System.out.println("Programa encerrado!");
-                    fecharPrograma = false;
-                    sc.close();
-                }
+                case SAIR -> fecharPrograma = menuSair();
                 default -> System.out.println("Opcao invalida, tente novamente.\n");
             }
         } while (fecharPrograma);
