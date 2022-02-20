@@ -11,7 +11,7 @@ public class Validador {
      * @return Este metodo retorna verdadeira se tiver mais que 1 caracter e for apenas letras;
      *                     retorna falso se receber caracteres nao aceitos.
      */
-    static boolean validaNome(String s) {
+    public static boolean validaNome(String s) {
         if (s.matches("^[A-Za-zÀ-ÿ \"'-]+$") && s.length() > 1) {
             System.out.println("Nome registrado com sucesso!");
             return true;
@@ -26,7 +26,7 @@ public class Validador {
      * @return Este metodo retorna verdadeira se tiver apenas numeros com tamanho em 10 e 11 digitos;
      *                     retorna falso se receber algo que não seja numeros.
      */
-    static boolean validaTelefone(String s) {
+    public static boolean validaTelefone(String s) {
         if (s.matches("\\d+") && s.length() > 9 && s.length() < 12) {
             System.out.println("Numero de telefone registrado com sucesso!");
             return true;
@@ -46,7 +46,7 @@ public class Validador {
      * @return Este metodo retorna verdadeira se receber dados no formato dd/MM/yyyy;
      *                     retorna falso se nao satisfazer a condicao.
      */
-    static boolean validaData(String s) {
+    public static boolean validaData(String s) {
         if (s.matches("^(3[01]|[12][0-9]|0[1-9])/(1[0-2]|0[1-9])/[0-9]{4}$")) {
             System.out.println("Data de Nascimento registrada com sucesso!");
             return true;
@@ -61,7 +61,7 @@ public class Validador {
      * @return Este metodo retorna verdadeira se tiver apenas numeros entre 0 e 10;
      *                     retorna falso se receber algo que nao seja numeros.
      */
-    static boolean validaNota(String s) {
+    public static boolean validaNota(String s) {
         if (s.matches("^(10)$|(10.0)$|^[0-9](\\.[0-9])?$")) {
             System.out.println("Nota registrada com sucesso!");
             return true;
@@ -76,7 +76,7 @@ public class Validador {
      * @return Este metodo retorna verdadeira se tiver apenas numeros;
      *                     retorna falso se receber algo que nao seja numeros.
      */
-    static boolean validaID(String s) {
+    public static boolean validaID(String s) {
         if (s.matches("^[0-9]*$") && !s.equals("")) {
             return true;
         }
