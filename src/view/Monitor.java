@@ -25,15 +25,7 @@ public class Monitor {
         String opcao;
 
         do {
-            System.out.print("---------------------------\\\\\n"
-                    + "[" + INSERIR + "] Cadastrar Aluno/Pessoa  |\n"
-                    + "[" + MOSTRAR_TODOS + "] Exibir todos cadastros  |\n"
-                    + "[" + ATUALIZAR + "] Atualizar um cadastro   |\n"
-                    + "[" + DELETAR + "] Deletar um cadastro     |\n"
-                    + "[" + SAIR + "] Sair                    |\n"
-                    + "---------------------------//\n");
-
-            System.out.print("Escolha uma opcao: ");
+            opcoesMenu();
             opcao = sc.nextLine();
 
             switch (opcao) {
@@ -45,5 +37,20 @@ public class Monitor {
                 default -> System.out.println("Opcao invalida, tente novamente.\n");
             }
         } while (fecharPrograma);
+    }
+
+    /**
+     * opcoesMenu exibe em tela as opções e a key para entrar no desejado menu.
+     */
+    private static void opcoesMenu() {
+        System.out.print("---------------------------\\\\\n"
+                + "[" + INSERIR + "] Cadastrar Aluno/Pessoa  |\n"
+                + "[" + MOSTRAR_TODOS + "] Exibir todos cadastros  |\n"
+                + "[" + ATUALIZAR + "] Atualizar um cadastro   |\n"
+                + "[" + DELETAR + "] Deletar um cadastro     |\n"
+                + "[" + SAIR + "] Sair                    |\n"
+                + "---------------------------//\n");
+
+        System.out.print("Escolha uma opcao: ");
     }
 }

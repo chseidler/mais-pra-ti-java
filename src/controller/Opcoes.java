@@ -119,6 +119,10 @@ public class Opcoes {
         }
     }
 
+    /**
+     * Metodo que recebe o ID, e se existe, deleta.
+     * @param idDeletar recebe um int com id a ser deletado.
+     */
     private static void deletarID(int idDeletar) {
         if (idExiste(idDeletar)) {
             cadastros.deletar(idDeletar);
@@ -127,6 +131,12 @@ public class Opcoes {
             System.out.println("Nao foi possivel excluir, ID nao encontrado.");
     }
 
+    /**
+     * Metodo verifica se id recebido existe no cadastro.
+     * @param id parametro de entrada enviado pelo usuario.
+     * @return esse metodo retorna verdadeiro se existe ID no cadastro
+     *                              falso se nao existe.
+     */
     private static boolean idExiste(int id) {
         return id >= 0 && id < cadastros.todos().size();
     }
@@ -146,6 +156,12 @@ public class Opcoes {
         System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*");
     }
 
+    /**
+     * Metodo que aguarda em loop até que entrada do usuario satisfaça condição no validador.
+     * @param texto String para imprimir na tela informação desejada.
+     * @param tipo String com valor a ser checado no validador.
+     * @return String enviada pelo usuario ja validado de acordo com o seu validador.
+     */
     private static String retornaVariavelValidada(String texto, String tipo) {
         String retorno = null;
         while (retorno == null) {
@@ -167,16 +183,35 @@ public class Opcoes {
         return retorno;
     }
 
+    /**
+     * Metodo insere Aluno no cadastro.
+     * @param nomeInserir Nome a ser inserido.
+     * @param telefoneInserir Telefone a ser inserido.
+     * @param aniversarioInserir Aniversario a ser inserido.
+     * @param notaFinaldInserir Nota Final a ser inserida.
+     */
     private static void inserirAluno(String nomeInserir, String telefoneInserir, String aniversarioInserir, double notaFinaldInserir) {
         cadastros.inserir(new Aluno(nomeInserir, telefoneInserir, aniversarioInserir, notaFinaldInserir));
         System.out.println("Aluno " + nomeInserir + " cadastrado(a) com sucesso!");
     }
 
+    /**
+     * Metodo insere Pessoa no cadastro.
+     * @param nomeInserir Nome a ser inserido.
+     * @param telefoneInserir Telefone a ser inserido.
+     * @param aniversarioInserir Aniversario a ser inserido.
+     */
     private static void inserirPessoa(String nomeInserir, String telefoneInserir, String aniversarioInserir) {
         cadastros.inserir(new Pessoa(nomeInserir, telefoneInserir, aniversarioInserir));
         System.out.println("Pessoa " + nomeInserir + " cadastrado(a) com sucesso!");
     }
 
+    /**
+     * Metodo para verificar em loop com usario se deseja ou nao inserir/atualizar variavel.
+     * @param texto Recebe texto a ser impresso com o tipo de dado que deseja ou nao inserir.
+     * @return Este metodo retorna verdadeira se deseja inserir variavel;
+     *                     retorna falso se nao deseja inserir variavel.
+     */
     private static boolean desejaInserir(String texto) {
         do {
             System.out.println(texto);
@@ -190,6 +225,10 @@ public class Opcoes {
         } while (true);
     }
 
+    /**
+     * Metodo para sair do programa.
+     * @return falso para encerrar loop do Monitor.
+     */
     public static boolean menuSair() {
         System.out.println("Programa encerrado!");
         sc.close();
