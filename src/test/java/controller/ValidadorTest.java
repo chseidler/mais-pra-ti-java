@@ -1,7 +1,6 @@
 package test.java.controller;
 
 import main.java.controller.Validador;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -76,19 +75,21 @@ class ValidadorTest {
         );
     }
 
-//    @Test
-//    void validaTelefone() {
-//    }
-//
-//    @Test
-//    void validaData() {
-//    }
-//
-//    @Test
-//    void validaNota() {
-//    }
-//
-//    @Test
-//    void validaID() {
-//    }
+    @Test
+    void deveRetornarTrueNaValidacaoDaID() {
+        assertAll( () -> assertTrue(Validador.validaID("10"))
+                ,() -> assertTrue(Validador.validaID("0"))
+                ,() -> assertTrue(Validador.validaID("50"))
+                ,() -> assertTrue(Validador.validaID("1000"))
+        );
+    }
+
+    @Test
+    void deveRetornarFalseNaValidacaoDaID() {
+        assertAll( () -> assertFalse(Validador.validaID("-2"))
+                ,() -> assertFalse(Validador.validaID("1.5"))
+                ,() -> assertFalse(Validador.validaID("1,5"))
+                ,() -> assertFalse(Validador.validaID("1a"))
+        );
+    }
 }
