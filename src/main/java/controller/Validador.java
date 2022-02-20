@@ -1,4 +1,4 @@
-package controller;
+package main.java.controller;
 
 /**
  * Classe Validador, responsavel pela validacao simples das entradas de dados do usuario.

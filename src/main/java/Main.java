@@ -1,4 +1,6 @@
-import view.*;
+package main.java;
+
+import main.java.view.Monitor;
 
 /**
  * Classe Main, responsavel por inicializar o programa e chamar o menu Principal.
